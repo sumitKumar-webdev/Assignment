@@ -1,12 +1,48 @@
-# React + Vite
+📝 Offline-First Notes App (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Hey! 👋  
+This is a lightweight, offline-first notes app built with **React + Vite**. You can take notes, even when you're offline — and everything syncs with a mock backend when you're back online. Markdown support and a polished UI are coming soon!
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🚀 Features (So Far)
 
-## Expanding the ESLint configuration
+ ✅ Add, edit, and delete notes
+ ✅ Offline storage using **IndexedDB** via **Dexie**
+ ✅ Detects online/offline status in real-time
+ ✅ Syncs with a mock backend when you're back online
+ ✅ State Mangment using Redux
+ ✅ Autosave while typing
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+ 🔧 Currently Working On
+
+ 📝 Markdown editing & preview (with `react-markdown` / `react-mde`)
+ 🎨 Improved UI and responsiveness
+ 🔍 Search notes by title/content
+ 🔄 Sync status indicators ("Synced", "Unsynced", "Syncing…")
+ 🏷️ Tags / categories
+ ⚔️ Conflict resolution UI
+ 📱 PWA support with service worker
+ 🧪 Unit & integration tests
+
+ 🛠 Tech Stack
+
+ ⚛️ React (with Hooks & Context)
+ ⚡ Vite (super fast dev server)
+ 🗃 Dexie.js (IndexedDB)
+ 🧰 json-server (for mock REST API)
+ 🎨 Tailwind CSS (styling)
+ 📝 react-markdown / react-mde (coming soon for Markdown)
+
+
+
+ 📁 Note Structure
+
+
+{
+  id: string,        // UUID
+  title: string,     // Note title
+  content: string,   // Markdown text
+  updatedAt: string, // ISO timestamp
+  syncedStatus: string //status of sync
+  synced: boolean    // true if synced with backend
+}
