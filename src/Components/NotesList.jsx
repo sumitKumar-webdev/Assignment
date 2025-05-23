@@ -7,7 +7,7 @@ export default function NotesList() {
   const dispatch = useDispatch()
  const noteList = useSelector((state)=>state.notes.noteList)
  
- if (!noteList.length) return <p>Please Create A Note</p>
+ if (!noteList.length) return <p className='text-center text-white font-semibold text-2xl'>Please Create A Note</p>
  return (
     <div className='mx-auto py-3 px-5 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-5'>
       {noteList.map((note)=>(

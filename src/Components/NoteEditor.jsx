@@ -7,7 +7,6 @@ export default function NoteEditor() {
     const textAreaRef = useRef()
     const dispatch = useDispatch();
     const activeNote = useSelector((state)=> state.notes.activeNote)
-    console.log(activeNote);
     
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')

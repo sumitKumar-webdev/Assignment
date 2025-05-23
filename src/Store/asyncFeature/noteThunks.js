@@ -18,8 +18,46 @@ export const fetchNotes = createAsyncThunk('notes/fetchNotes',
        return data;
     }
 )
+export const SyncToServer = createAsyncThunk('note/SyncToServer', 
+    async (_, { rejectWithValue }) =>{
+        console.log('syncing');
+        
+        try {
+            const unSyncedNotes = await db.notes.where('synced').equals(false).toArray()
+        
+        
+        await Promise.all(unSyncedNotes.map(async (note)=>{
+            let response = await fetch(`${API}/${note.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify(note)
+            })
+            if (response.status === 404) {
+                 response = await fetch(`${API}/${note.id}`, {
+                method: 'POST',
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify(note)
+            })
+            }
+            if (response.ok) {
+                await db.notes.update(note.id, {
+                    synced : true,
+                    syncedStatus: 'synced'
+                })
+            }else if (!response.ok) {
+                console.error('failed to Sync', await response.text())
+            }
+        }))
+        } catch (error) {
+             console.error("Error in SyncToServer thunk:", err);
+      return rejectWithValue(err.message);
+        }
+        
+    }
+)
 
 export const saveNote = createAsyncThunk('note/saveNote', 
+    
     async (note, { rejectWithValue }) =>{
         try {
              const existingNote = await db.notes.get(note.id)
@@ -54,38 +92,4 @@ export const deleteNote = createAsyncThunk('note/deleteNote',
        
         return Id;      
     })
-export const SyncToServer = createAsyncThunk('note/SyncToServer', 
-    async (_, { rejectWithValue }) =>{
-        try {
-            const unSyncedNotes = await db.notes.where('synced').equals(false).toArray()
-        
-        
-        await Promise.all(unSyncedNotes.map(async (note)=>{
-            let response = await fetch(`${API}/${note.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type' : 'application/json'},
-                body: JSON.stringify(note)
-            })
-            if (response.status === 404) {
-                 response = await fetch(`${API}/${note.id}`, {
-                method: 'POST',
-                headers: { 'Content-Type' : 'application/json'},
-                body: JSON.stringify(note)
-            })
-            }
-            if (response.ok) {
-                await db.notes.update(note.id, {
-                    synced : true,
-                    syncedStatus: 'synced'
-                })
-            }else if (!response.ok) {
-                console.error('failed to Sync', await response.text())
-            }
-        }))
-        } catch (error) {
-             console.error("Error in SyncToServer thunk:", err);
-      return rejectWithValue(err.message);
-        }
-        
-    }
-)
+
