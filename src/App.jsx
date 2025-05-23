@@ -62,7 +62,8 @@ Notes App with Sync</h1>
 
   <div className='flex justify-end mt-10'>
   <button onClick={()=>handleNewNote()} className='bg-[#FDFBD4] px-3 py-2 font-semibold rounded-xl'>New Note</button>
- 
+  </div>
+
   <div className='pt-10 '>
   <NotesList />
   </div>
